@@ -3,12 +3,12 @@ var express = require('express');
 module.exports = function(app){
 
 	var router = express.Router();
-    app.use('/gpedidos/api', router);
+    app.use('/api', router);
 
-	router.route('/me')
+	router.route('/by')
 	   .get(function(req, res){
 	   	//console.log('response: '+ req);
-		res.json({"author":"Gledson Cruz"});
+		res.json({"appname":"GPedidos-Sistema de Pedidos", "author":"Gledson Cruz", "email":"gledson.cruz@gmail.com"});
 	});
 
 	app.use(function(req,res){

@@ -21,12 +21,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": "https://github.com/gledsoncruz/gpedidos"
   },
   "keywords": [
     "node",
     "heroku",
-    "express"
+    "express",
+    "order"
   ],
   "license": "MIT"
 }
