@@ -2,6 +2,7 @@ var express = require('express');
 
 module.exports = function(app){
 
+	var loginCtrl = app.controllers.loginCtrl;
 	var userCtrl = app.controllers.userCtrl;
 
 	var router = express.Router();
@@ -14,11 +15,20 @@ module.exports = function(app){
 	});
 
     router.route('/signup').post(userCtrl.save);
+    router.route('/login')
+		.post(loginCtrl.authenticate);
+
+	//ZONA RESTRITA
+    router.use(loginCtrl.validateJWT);
+    router.route('/me')
+		.get(function(req, res){
+			res.json(req.decoded);
+		});
 
    	router.route('/users/:id')
-		.get(userCtrl.findById)
-		.delete(userCtrl.delete)
-		.put(userCtrl.update);
+		.get(loginCtrl.authorize, userCtrl.findById)
+		.delete(loginCtrl.authorize, userCtrl.delete)
+		.put(loginCtrl.authorize, userCtrl.update);
 
 	router.route('/users')
 		.get(userCtrl.findAll);
