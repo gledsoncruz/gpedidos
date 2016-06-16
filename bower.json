@@ -1,0 +1,21 @@
+{
+  "name": "gpedidos",
+  "description": "API de pedidos",
+  "main": "app.js",
+  "authors": [
+    "Gledson Cruz <gledson.cruz@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "heroku",
+    "express",
+    "order"
+  ],
+  "homepage": "https://github.com/gledsoncruz/gpedidos",
+  "dependencies": {
+    "angular-bootstrap": "^1.3.3",
+    "bootstrap": "^3.3.6",
+    "angular-route": "^1.5.7"
+  }
+}

@@ -19,7 +19,7 @@ module.exports = function(app){
 		.post(loginCtrl.authenticate);
 
 	//ZONA RESTRITA
-    router.use(loginCtrl.validateJWT);
+    //router.use(loginCtrl.validateJWT);
     router.route('/me')
 		.get(function(req, res){
 			res.json(req.decoded);
