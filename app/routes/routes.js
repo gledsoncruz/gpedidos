@@ -4,6 +4,7 @@ module.exports = function(app){
 
 	var loginCtrl = app.controllers.loginCtrl;
 	var userCtrl = app.controllers.userCtrl;
+	var storeCtrl = app.controllers.storeCtrl;
 
 	var router = express.Router();
     app.use('/api', router);
@@ -19,7 +20,7 @@ module.exports = function(app){
 		.post(loginCtrl.authenticate);
 
 	//ZONA RESTRITA
-    //router.use(loginCtrl.validateJWT);
+    router.use(loginCtrl.validateJWT);
     router.route('/me')
 		.get(function(req, res){
 			res.json(req.decoded);
@@ -33,7 +34,14 @@ module.exports = function(app){
 	router.route('/users')
 		.get(userCtrl.findAll);
 
+	router.route('/stores')
+		.get(storeCtrl.findAll)
+		.post(storeCtrl.save);
 
+	router.route('/stores/:id')
+		.get(loginCtrl.authorize, storeCtrl.findById)
+		.delete(loginCtrl.authorize, storeCtrl.delete)
+		.put(loginCtrl.authorize, storeCtrl.update);
 
 	app.use(function(req,res){
 	    res.status(404).send({message: 'Erro 404: Rota não encontrada'});
