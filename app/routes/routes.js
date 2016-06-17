@@ -20,6 +20,9 @@ module.exports = function(app){
     router.route('/login')
 		.post(loginCtrl.authenticate);
 
+	router.route('/products')
+		.get(productCtrl.findAll);
+
 	//ZONA RESTRITA
     router.use(loginCtrl.validateJWT);
     router.route('/me')
@@ -49,7 +52,6 @@ module.exports = function(app){
 	//PRODUCTS
 
 	router.route('/products')
-		.get(productCtrl.findAll)
 		.post(productCtrl.save);
 
 	router.route('/products/:id')

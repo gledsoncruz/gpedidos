@@ -1,2 +1,2 @@
 'use strict';
-angular.module('gpedidos', ['appRoutes', 'ui.bootstrap']);
+angular.module('gpedidos', ['ui.bootstrap', 'angular-loading-bar', 'appRoutes', 'productService', 'productCtrl']);

@@ -1,3 +1,10 @@
+.text-wrap {
+    white-space: nowrap;
+    width: 10em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .glyphicon { margin-right:5px; }
 .thumbnail
 {
