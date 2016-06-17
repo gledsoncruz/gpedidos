@@ -5,6 +5,7 @@ module.exports = function(app){
 	var loginCtrl = app.controllers.loginCtrl;
 	var userCtrl = app.controllers.userCtrl;
 	var storeCtrl = app.controllers.storeCtrl;
+	var productCtrl = app.controllers.productCtrl;
 
 	var router = express.Router();
     app.use('/api', router);
@@ -34,6 +35,8 @@ module.exports = function(app){
 	router.route('/users')
 		.get(userCtrl.findAll);
 
+	//STORES
+
 	router.route('/stores')
 		.get(storeCtrl.findAll)
 		.post(storeCtrl.save);
@@ -42,6 +45,17 @@ module.exports = function(app){
 		.get(loginCtrl.authorize, storeCtrl.findById)
 		.delete(loginCtrl.authorize, storeCtrl.delete)
 		.put(loginCtrl.authorize, storeCtrl.update);
+
+	//PRODUCTS
+
+	router.route('/products')
+		.get(productCtrl.findAll)
+		.post(productCtrl.save);
+
+	router.route('/products/:id')
+		.get(loginCtrl.authorize, productCtrl.findById)
+		.delete(loginCtrl.authorize, productCtrl.delete)
+		.put(loginCtrl.authorize, productCtrl.update);
 
 	app.use(function(req,res){
 	    res.status(404).send({message: 'Erro 404: Rota não encontrada'});
