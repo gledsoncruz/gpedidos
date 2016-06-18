@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 module.exports = function(){
 
-	var StockSchema = new Schema({
+	var OfferSchema = new Schema({
 		store: {
 			type: Schema.Types.ObjectId,
 			ref: 'Store'
@@ -26,11 +26,11 @@ module.exports = function(){
 		}
 	});
 
-	StockSchema.pre('update', function() {
+	OfferSchema.pre('update', function() {
 	  this.update({},{ $set: { updated_at: new Date() } });
 	});
 
 
-	return mongoose.model('Stock', StockSchema);
+	return mongoose.model('Offer', OfferSchema);
 
 };
