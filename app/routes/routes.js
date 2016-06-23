@@ -6,6 +6,7 @@ module.exports = function(app){
 	var userCtrl = app.controllers.userCtrl;
 	var storeCtrl = app.controllers.storeCtrl;
 	var productCtrl = app.controllers.productCtrl;
+	var offerCtrl = app.controllers.offerCtrl;
 
 	var router = express.Router();
     app.use('/api', router);
@@ -20,20 +21,40 @@ module.exports = function(app){
     router.route('/login')
 		.post(loginCtrl.authenticate);
 
+
+
 	router.route('/products')
 		.get(productCtrl.findAll);
 
+	router.route('/offers')
+		.get(offerCtrl.findAll)
+		.post(offerCtrl.save);
+
+	router.route('/productsInOffers')
+		.get(productCtrl.productsInOffers);
+
+	router.route('/offersPerProduct/:idProd')
+		.get(offerCtrl.offersPerProduct);
+
+
+
+
+
+
 	//ZONA RESTRITA
-    router.use(loginCtrl.validateJWT);
+    //router.use(loginCtrl.validateJWT);
     router.route('/me')
 		.get(function(req, res){
 			res.json(req.decoded);
 		});
 
    	router.route('/users/:id')
-		.get(loginCtrl.authorize, userCtrl.findById)
-		.delete(loginCtrl.authorize, userCtrl.delete)
-		.put(loginCtrl.authorize, userCtrl.update);
+		.get(/*loginCtrl.authorize, */userCtrl.findById)
+		.delete(/*loginCtrl.authorize, */userCtrl.delete)
+		.put(/*loginCtrl.authorize, */userCtrl.update);
+
+	router.route('/users')
+		.get(userCtrl.findAll);
 
 	router.route('/users')
 		.get(userCtrl.findAll);
@@ -45,9 +66,9 @@ module.exports = function(app){
 		.post(storeCtrl.save);
 
 	router.route('/stores/:id')
-		.get(loginCtrl.authorize, storeCtrl.findById)
-		.delete(loginCtrl.authorize, storeCtrl.delete)
-		.put(loginCtrl.authorize, storeCtrl.update);
+		.get(/*loginCtrl.authorize, */storeCtrl.findById)
+		.delete(/*loginCtrl.authorize, */storeCtrl.delete)
+		.put(/*loginCtrl.authorize, */storeCtrl.update);
 
 	//PRODUCTS
 
@@ -55,9 +76,19 @@ module.exports = function(app){
 		.post(productCtrl.save);
 
 	router.route('/products/:id')
-		.get(loginCtrl.authorize, productCtrl.findById)
-		.delete(loginCtrl.authorize, productCtrl.delete)
-		.put(loginCtrl.authorize, productCtrl.update);
+		.get(/*loginCtrl.authorize, */productCtrl.findById)
+		.delete(/*loginCtrl.authorize, */productCtrl.delete)
+		.put(/*loginCtrl.authorize, */productCtrl.update);
+
+	//OFFERS
+
+	//router.route('/offers')
+	//	.post(offerCtrl.save);
+
+	router.route('/offers/:id')
+		.get(/*loginCtrl.authorize, */offerCtrl.findById)
+		.delete(/*loginCtrl.authorize, */offerCtrl.delete)
+		.put(/*loginCtrl.authorize, */offerCtrl.update);
 
 	app.use(function(req,res){
 	    res.status(404).send({message: 'Erro 404: Rota não encontrada'});

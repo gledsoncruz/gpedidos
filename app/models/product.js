@@ -12,6 +12,10 @@ module.exports = function(){
 			type: String,
 			required: true
 		},
+		offers: [{
+			type: Schema.Types.ObjectId,
+			ref: 'Offer'
+		}],
 		updated_at: {
 			type: Date,
 			default: Date.now

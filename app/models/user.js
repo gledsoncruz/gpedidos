@@ -10,6 +10,10 @@ module.exports = function(){
 			type: String,
 			required: true
 		},
+		stores: [{
+			type: Schema.Types.ObjectId,
+			ref: 'Store'
+		}],
 		email: {
 			type: String,
 			required: true,

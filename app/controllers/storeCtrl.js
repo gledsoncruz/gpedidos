@@ -2,11 +2,12 @@ var sanitize = require('mongo-sanitize');
 module.exports = function(app){
 
 	var Store = app.models.store;
+	var User = app.models.user;
 	//var loginCtrl = app.controllers.loginCtrl;
 	var controller = {};
 
 	controller.findAll = function(req, res){
-		Store.find(function(err, stores) {
+		Store.find({}).populate('owner').exec(function(err, stores) {
 		    if (err) {
 		      return res.send(err);
 		    }
@@ -17,7 +18,7 @@ module.exports = function(app){
 
 	controller.findById = function(req, res){
 		var id = sanitize(req.params.id);
-		Store.findOne({'_id' :id}, function(err, store){
+		Store.findOne({'_id' :id}).populate('offers').exec(function(err, store){
 			if (err){
 				return res.status(401).json({message: 'Store not found'})
 			}
@@ -39,7 +40,8 @@ module.exports = function(app){
 
 	controller.save = function(req, res){
 		var dados = {
-			"owner" : req.decoded.id,
+			//"owner" : req.decoded.id,
+			"owner" : sanitize(req.body.owner),
 		    "name" : sanitize(req.body.name),
 		    "description" : sanitize(req.body.description),
 		    "address" : sanitize(req.body.address),
@@ -54,26 +56,47 @@ module.exports = function(app){
 
 			if (err){
 				return res.send({ success:false, message: 'Error'});
+			} else {
+
+				User.update({_id: sanitize(req.body.owner) },{ $push: { stores: store } }, function(err, user){
+					if (err){
+						return res.send({ success:false, message: 'Error'});
+					}
+				});
+
+				return res.json({
+					success: true,
+					message: 'Store created !'
+				})
+
 			}
 
-			return res.json({
-				success: true,
-				message: 'Store created !'
-				//token: token
-			})
+
 		});
 	}
 
 	controller.delete = function(req, res){
 		var id = sanitize(req.params.id);
+		var owner = sanitize(req.body.owner);
+
 		Store.remove({'_id' :id}, function(err, store){
 			if (err){
 				res.status(401).json({message: 'Error delete store'})
-			}
-			res.json({message: 'Store has been deleted'})
-		})
-	}
+			} else {
 
+				User.update({_id: owner },{ $pull: { stores: id } }, function(err, user){
+				if (err){
+					return res.send({ success:false, message: 'Error'});
+					}
+				});
+
+				res.json({message: 'Store has been deleted'})
+
+			}
+
+		});
+
+	}
 
 	return controller;
 

@@ -1,6 +1,6 @@
 
 
-<div id="categories-list" class="row list-group" ng-controller="ProductCtrl as product" ng-init="product.getProducts()">
+<div id="categories-list" class="row list-group" ng-controller="OfferCtrl as offer" ng-init="offer.getOffers()">
 
 	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
@@ -10,27 +10,29 @@
 
 		<div class="row">
 
-			<div class="input-group">
+			<div class="input-group container">
 				<div class="input-group-addon">Buscar</div>
 				<input ng-model="filtro" class="form-control input-lg" type="text" placeholder="Produto...">
 		    </div>
 		    <br/>
 
-			<div ng-repeat="product in product.products | filter: filtro | offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
+			<div ng-repeat="offer in offer.offers | filter: filtro | offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
 
 		        <div class="item col-xs-12 col-sm-6 col-md-3 col-lg-2">
 		            <div class="thumbnail">
-		                <img class="group list-group-image" src="http://placehold.it/400x450/A9A9A9/fff" alt="" />
+		                <img class="group list-group-image" src="../assets/images/defaultProductImage_600x600_fiber.png" alt="" />
 		                <div class="caption">
-		                    <h4 class="group inner list-group-item-heading text-wrap"><strong>{{product.name}}</strong></h4>
-		                    <p class="group inner list-group-item-text">
-		                        {{product.description}}</p>
+		                    <h4 class="group inner list-group-item-heading text-wrap"><strong>{{offer.name}}</strong></h4>
+		                    <p class="group inner list-group-item-text text-wrap">
+		                        {{offer.description}}</p>
 		                    <div class="row">
-		                        <div class="col-xs-12 col-md-6 col-sm-6 col-lg-6">
-		                            <p class="lead">$21.000</p>
+		                        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+		                            <p class="lead">{{offer.offers.length}} oferta(s)</p>
 		                        </div>
-		                        <div class="col-xs-12 col-md-6 col-sm-6 col-lg-6">
-		                            <a class="btn btn-success" href="#">Detalhes</a>
+		                    </div>
+		                    <div class="row">
+		                    	<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+		                            <a class="btn btn-success pull-right" href="#">Detalhes</a>
 		                        </div>
 		                    </div>
 		                </div>

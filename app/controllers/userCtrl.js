@@ -6,7 +6,7 @@ module.exports = function(app){
 	var controller = {};
 
 	controller.findAll = function(req, res){
-		User.find({}).select('name email role block created_at').exec(function(err, users) {
+		User.find({}).populate('stores').exec(function(err, users) {
 		    if (err) {
 		      return res.send(err);
 		    }

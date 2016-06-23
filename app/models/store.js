@@ -8,6 +8,10 @@ module.exports = function(){
 			type: Schema.Types.ObjectId,
 			ref: 'User'
 		},
+		offers: [{
+			type: Schema.Types.ObjectId,
+			ref: 'Offer'
+		}],
 		name: {
 			type: String,
 			required: true
@@ -49,6 +53,11 @@ module.exports = function(){
 	StoreSchema.pre('update', function() {
 	  this.update({},{ $set: { updated_at: new Date() } });
 	});
+
+	StoreSchema.methods.message = function(msg) {
+
+	    return console.error(msg);
+	};
 
 
 	return mongoose.model('Store', StoreSchema);

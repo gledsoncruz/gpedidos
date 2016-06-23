@@ -6,13 +6,24 @@ module.exports = function(app){
 	var controller = {};
 
 	controller.findAll = function(req, res){
-		Product.find(function(err, products) {
+		Product.find().populate('offers').exec(function(err, products) {
 		    if (err) {
 		      return res.send(err);
 		    }
 
 		    res.json(products);
 		});
+	}
+
+	controller.productsInOffers = function(req, res){
+
+		Product.find({"offers" : {$exists: true}, $where : "this.offers.length > 0"}).populate('offers').exec(function(err, products){
+			if (err) {
+				return res.send(err);
+			}
+
+			res.json(products);
+		})
 	}
 
 	controller.findById = function(req, res){
