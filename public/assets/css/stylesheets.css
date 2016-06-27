@@ -1,3 +1,29 @@
+.price-range {
+    font-size:20px;
+    font-weight: bold;
+}
+
+.price-range .price-average {
+    color: blue;
+}
+
+.price-range .price-min {
+    color: #39ac73;
+}
+
+.price-range .price-max {
+    color: #ff0000;
+}
+
+.product-range{
+    word-spacing: 10px;
+}
+
+.info-offers-product {
+    padding-bottom: 20px;
+}
+
+
 .text-wrap {
     white-space: nowrap;
     width: 10em;

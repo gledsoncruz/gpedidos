@@ -8,8 +8,11 @@ angular.module('appRoutes', ['ngRoute'])
     .when('/', {
       templateUrl: 'partials/home.html'
     })
-    .when('/offers', {
-      templateUrl: 'partials/offers.html'
+    .when('/offersPerProduct/:id', {
+      templateUrl: 'partials/offers_per_product.html'
+    })
+    .when('/offersPerStore', {
+      templateUrl: 'partials/offers_per_store.html'
     });
 
     //$locationProvider.html5Mode(false);

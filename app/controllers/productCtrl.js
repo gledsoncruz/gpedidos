@@ -2,11 +2,11 @@ var sanitize = require('mongo-sanitize');
 module.exports = function(app){
 
 	var Product = app.models.product;
-	//var loginCtrl = app.controllers.loginCtrl;
+	var Offer = app.models.offer;
 	var controller = {};
 
 	controller.findAll = function(req, res){
-		Product.find().populate('offers').exec(function(err, products) {
+		Product.find().exec(function(err, products) {
 		    if (err) {
 		      return res.send(err);
 		    }
@@ -16,19 +16,43 @@ module.exports = function(app){
 	}
 
 	controller.productsInOffers = function(req, res){
+		Product.find({"offers" : {$exists: true}, $where : "this.offers.length > 0"})
+			.populate({
+				path: 'offers',
+				model: 'Offer',
+				populate: {
+					path: 'store',
+					model: 'Store',
+					match: {active: true}
+				},
+				match: {
+					'available': true,
+					'store': {$ne: null}
+				}
+			}).exec(function(err, products){
+				if (err) {
+					return res.send(err);
+				} else {
+					var prods = [];
+					products.forEach(function (prod) {
+					    prod.offers.forEach(function(offer, index){
+					    	if (offer.store == null){
+					    		prod.offers.splice(index, 1);
+					    	}
+					    })
+					    if (prod.offers.length > 0){
+					    	prods.push(prod);
+					    }
 
-		Product.find({"offers" : {$exists: true}, $where : "this.offers.length > 0"}).populate('offers').exec(function(err, products){
-			if (err) {
-				return res.send(err);
-			}
-
-			res.json(products);
-		})
+					});
+					res.json(prods);
+				}
+			})
 	}
 
 	controller.findById = function(req, res){
 		var id = sanitize(req.params.id);
-		Product.findOne({'_id' :id}, function(err, product){
+		Product.findOne({'_id' :id}).populate('offers').exec(function(err, product){
 			if (err){
 				return res.status(401).json({message: 'Product not found'})
 			}

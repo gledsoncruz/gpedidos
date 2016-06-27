@@ -2,7 +2,7 @@
 
 angular.module('offerService', [])
 
-.factory('OfferFactory', function($http, $q){
+.factory('OfferFactory', function($http, $q, $resource){
 	var offerFactory = {};
 	var deferred = $q.defer();
 
@@ -17,6 +17,10 @@ angular.module('offerService', [])
 			return deferred.promise;
 		});
 
+	};
+
+	offerFactory.getOffersPerProduct = function(){
+		return $resource('/api/offersPerProduct/:id');
 	};
 
 	return offerFactory;

@@ -16,13 +16,41 @@ module.exports = function(app){
 		});
 	}
 
-	controller.offersPerProduct = function(req, res){
-		var idProd = sanitize(req.params.idProd)
-		Offer.find({'product' :idProd}).populate('product store').exec(function(err, offers) {
+	controller.findOffersActives = function(req, res){
+		Offer.find({$and: [{'available': true}]}).populate('store product').exec(function(err, offers) {
 		    if (err) {
 		      return res.send(err);
 		    }
+
 		    res.json(offers);
+		});
+	}
+
+	controller.offersPerProduct = function(req, res){
+		var id = sanitize(req.params.id);
+		Product.findOne({'_id' :id}).populate({
+			path: 'offers',
+			model: 'Offer',
+			populate: {
+				path: 'store',
+				model: 'Store'
+			},
+			match: {
+				'available': true,
+				'store': {$ne: null}
+			}
+		}).exec(function(err, product){
+			if (err){
+				return res.status(401).json({message: 'Product not found'})
+			} else {
+					product.offers.forEach(function (offer, index) {
+					    if ((!offer.available) || (!offer.store.active)){
+					    	product.offers.splice(index, 1);
+					    }
+					});
+
+				res.json(product);
+			}
 
 		});
 
@@ -41,12 +69,12 @@ module.exports = function(app){
 	controller.update = function(req, res){
 		var id = sanitize(req.params.id);
 		var updates = req.body;
-		Offer.update({"_id" :id}, req.body,
+		Offer.findOneAndUpdate({"_id" :id}, req.body,
 			function(err, offer){
 				if (err){
 					return res.json({ success: false, message: 'Error updated.'});
 				}
-					return res.status(202).json({success: true, message: 'Offer has been updated'})
+				return res.status(202).json({success: true, message: 'Offer has been updated'})
 			});
 	}
 
@@ -59,7 +87,6 @@ module.exports = function(app){
 		};
 
 		Offer.create(dados, function(err, offer){
-
 
 			if (err){
 				if (err.code == 11000){

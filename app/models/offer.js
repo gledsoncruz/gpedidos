@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Store = require('./store');
-var Product = require('./product');
+//var Store = require('./store');
+//var Product = require('./product');
 
 
 module.exports = function(){
@@ -31,31 +31,16 @@ module.exports = function(){
 
 	OfferSchema.index({ store: 1, product: 1}, { unique: true });
 
-	OfferSchema.pre('update', function() {
-
-	  	console.error("--------------------------------------------------");
-	  	console.error(this._id);
-	  	console.error("--------------------------------------------------");
-
-	  	if (this.available){
-			var storeModel = mongoose.model('Store');
-			var productModel = mongoose.model('Product');
-			storeModel.update({_id: this.store },{ $push: { offers: this.id } }, function(store){});
-			productModel.update({_id: this.product },{ $push: { offers: this.id } }, function(product){});
-		}
-
+	OfferSchema.pre('findOneAndUpdate', function() {
 		this.update({},{ $set: { updated_at: new Date() } });
 	});
 
 	OfferSchema.post('save', function(){
 
-		if (this.available){
-			var storeModel = mongoose.model('Store');
-			var productModel = mongoose.model('Product');
-			storeModel.update({_id: this.store },{ $push: { offers: this } }, function(store){});
-			productModel.update({_id: this.product },{ $push: { offers: this } }, function(product){});
-		}
-
+		var storeModel = mongoose.model('Store');
+		var productModel = mongoose.model('Product');
+		storeModel.update({_id: this.store },{ $push: { offers: this } }, function(store){});
+		productModel.update({_id: this.product },{ $push: { offers: this } }, function(product){});
 
 	});
 

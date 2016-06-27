@@ -1,0 +1,53 @@
+<div class="container-fluid" ng-controller="OfferCtrl as offersCtrl" ng-init="offersCtrl.getOffersPerProduct()">
+		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+			<a href="#" class="thumbnail">
+				<img src="../assets/images/defaultProductImage_600x600_fiber.png" alt="">
+			</a>
+		</div>
+
+		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+			<div class=info-offers-product>
+				<h1><b>{{offersCtrl.product.name}}</b> </h1>
+				<p>{{offersCtrl.product.description}}</p>
+
+					<h3>Ofertas:</h3>
+					de
+					<span class="price-range">
+						<span class="price-min">{{offerMinValue | currency: 'R$ '}}</span>
+					</span>
+					até
+					<span class="price-range">
+						<span class="price-max">{{offerMaxValue | currency: 'R$ '}}</span>
+					</span>
+					<p><span class="label label-primary">Economize {{offerDiff | currency: 'R$ -'}}</span></p>
+
+			</div>
+			<div class="row" style="padding-bottom: 20px;">
+				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+					<input ng-model="filtro" class="form-control" type="text" placeholder="Loja..."/>
+				</div>
+			</div>
+
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Loja</th>
+						<th>Email</th>
+						<th>Tel</th>
+						<th>Preço</th>
+						<th colspan="2" style="text-align: center;">Ação</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="offer in offersCtrl.product.offers  | filter: filtro | orderBy:'offer.price'">
+						<td>{{offer.store.name}}</td>
+						<td>{{offer.store.address}}</td>
+						<td>(24) 3346-6242</td>
+						<td>{{offer.price | currency: 'R$ '}}</td>
+						<td style="text-align: center;"><a class="btn btn-xs btn-primary" href="#/offersPerStore" role="button">Visualizar Loja</a></td>
+						<td style="text-align: center;"><a class="btn btn-xs btn-primary" href="#/offersPerStore" role="button">Reservar Produto</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>

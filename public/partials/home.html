@@ -3,6 +3,14 @@
 <div id="categories-list" class="row list-group" ng-controller="OfferCtrl as offer" ng-init="offer.getOffers()">
 
 	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Categorias</h3>
+		</div>
+		<div class="panel-body">
+			Panel content
+		</div>
+	</div>
 
 	</div>
 
@@ -32,7 +40,7 @@
 		                    </div>
 		                    <div class="row">
 		                    	<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
-		                            <a class="btn btn-success pull-right" href="#">Detalhes</a>
+		                            <a class="btn btn-success pull-right" ng-href="#/offersPerProduct/{{offer._id}}">Detalhes</a>
 		                        </div>
 		                    </div>
 		                </div>
@@ -51,10 +59,6 @@
 			<pre>Página {{currentPage}} / {{numPages}} em um total de {{totalItems}} registros</pre>
 
 		</div>
-
-
-
-
 
 	</div>
 

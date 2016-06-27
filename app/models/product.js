@@ -30,7 +30,6 @@ module.exports = function(){
 	  this.update({},{ $set: { updated_at: new Date() } });
 	});
 
-
 	return mongoose.model('Product', ProductSchema);
 
 };

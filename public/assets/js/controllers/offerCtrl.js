@@ -8,9 +8,10 @@ angular.module('offerCtrl', ['offerService'])
         return input.slice(start);
     }
 })
-.controller('OfferCtrl', function (OfferFactory, $location, $scope) {
+.controller('OfferCtrl', function (OfferFactory, $location, $scope, $routeParams) {
 
 	var vm = this;
+	//$scope.offersPerProduct = [];
 
 	vm.getOffers = function(){
 		OfferFactory.getAllOffers()
@@ -29,7 +30,28 @@ angular.module('offerCtrl', ['offerService'])
 			});
 	};
 
+	vm.getOffersPerProduct = function(){
 
+		OfferFactory.getOffersPerProduct().get({id: $routeParams.id}, function(product){
+			vm.product = product;
+			var minValue = 99999;
+			var maxValue = 0;
+			product.offers.forEach(function(offer){
+				if (offer.price < minValue){
+					minValue = offer.price;
+				}
+				if (offer.price > maxValue){
+					maxValue = offer.price;
+				}
+			});
+			$scope.offerMinValue = minValue;
+			$scope.offerMaxValue = maxValue;
+			$scope.offerDiff = maxValue - minValue;
+			$scope.offerAverage = (maxValue + minValue)/2;
+		}, function(err){
+			console.error(err);
+		})
 
+	};
 
 });

@@ -30,15 +30,14 @@ module.exports = function(app){
 		.get(offerCtrl.findAll)
 		.post(offerCtrl.save);
 
+	router.route('/offersActives')
+		.get(offerCtrl.findOffersActives);
+
 	router.route('/productsInOffers')
 		.get(productCtrl.productsInOffers);
 
-	router.route('/offersPerProduct/:idProd')
+	router.route('/offersPerProduct/:id')
 		.get(offerCtrl.offersPerProduct);
-
-
-
-
 
 
 	//ZONA RESTRITA
