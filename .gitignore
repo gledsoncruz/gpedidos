@@ -11,3 +11,5 @@ public/assets/vendor/*
 # Docker
 Dockerfile
 docker-compose.yml
+
+.bowerrc
