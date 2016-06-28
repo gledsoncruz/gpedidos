@@ -16,6 +16,46 @@ module.exports = function(app){
 		});
 	}
 
+	controller.offersPerStore = function(req, res){
+		var id = sanitize(req.params.id);
+		Store.findOne({'_id' :id}).select('-__v -created_at -updated_at').populate([{
+			path: 'offers',
+			model: 'Offer',
+			select: '_id product price available',
+			match: {
+				'available': true,
+				'store': {$ne: null}
+			},
+			options: {
+	          sort: 'price'
+	        },
+	        populate: {
+	        	path: 'product',
+	        	model: 'Product',
+	        	select: '_id name description offers'
+	        }
+		},
+		{
+			path: 'owner',
+			model: 'User',
+			select: '_id name email'
+		}]).exec(function(err, store){
+			if (err){
+				return res.status(401).json({message: 'Store not found'})
+			} else {
+					store.offers.forEach(function (offer, index) {
+					    if (!offer.available){
+					    	store.offers.splice(index, 1);
+					    }
+					});
+
+				res.json(store);
+			}
+
+		});
+
+	}
+
 	controller.findById = function(req, res){
 		var id = sanitize(req.params.id);
 		Store.findOne({'_id' :id}).populate('offers').exec(function(err, store){

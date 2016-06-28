@@ -1,1 +1,69 @@
-<h1>Offers Per Store</h1>
+<div class="container-fluid" ng-controller="OfferCtrl as offersCtrl" ng-init="offersCtrl.getOffersPerStore()">
+		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+			<a href="#" class="thumbnail">
+				<img src="../assets/images/defaultProductImage_600x600_fiber.png" alt="">
+			</a>
+		</div>
+
+		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+			<div class=well>
+				<h1><b>{{offersCtrl.store.name}}</b> </h1>
+				<address>
+					<strong>{{offersCtrl.store.owner.name}}</strong><br>
+					{{offersCtrl.store.address}}<br>
+					{{offersCtrl.store.city}}, {{offersCtrl.store.state}} {{offersCtrl.store.zipcode}}<br>
+					<abbr title="Phone">P:</abbr> (24) 3346-7890
+				</address>
+
+				<p><h3><span class="label label-primary">Essa loja possui {{offersCtrl.store.offers.length}} ofertas.</span></h3></p>
+
+			</div>
+
+			<div class="row" style="padding-bottom: 20px;">
+				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+					<input ng-model="filtro" class="form-control" type="text" placeholder="Loja..."/>
+				</div>
+			</div>
+
+			<div class="row">
+
+			<div ng-repeat="offer in offersCtrl.store.offers | filter: filtro | offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
+
+		        <div class="item col-xs-12 col-sm-6 col-md-3 col-lg-2">
+		            <div class="thumbnail">
+		                <img class="group list-group-image" src="../assets/images/defaultProductImage_600x600_fiber.png" alt="" />
+		                <div class="caption">
+		                    <h4 class="group inner list-group-item-heading text-wrap"><strong>{{offer.product.name}}</strong></h4>
+		                    <p class="group inner list-group-item-text text-wrap">
+		                        {{offer.product.description}}
+		                        	<a ng-if="offer.product.offers.length > 1" class="pull-left" ng-href="#/offersPerProduct/{{offer.product._id}}"> (mais ofertas)</a>
+
+		                        	<a ng-if="offer.product.offers.length == 1" class="pull-left"> Oferta única !</a>
+
+
+		                    </p>
+
+
+
+		                    <div class="row">
+		                        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+		                            <strong class="lead price-label">{{offer.price | currency: 'R$ '}}</strong>
+		                        </div>
+		                    </div>
+		                    <div class="row">
+		                    	<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+		                            <a class="btn btn-success pull-right" ng-href="#/offersPerProduct/{{offer.product._id}}">Adicionar pedido</a>
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+
+		    </div>
+
+		</div>
+
+	</div>
+</div>
+
+

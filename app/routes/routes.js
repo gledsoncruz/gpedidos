@@ -39,6 +39,9 @@ module.exports = function(app){
 	router.route('/offersPerProduct/:id')
 		.get(offerCtrl.offersPerProduct);
 
+	router.route('/offersPerStore/:id')
+		.get(storeCtrl.offersPerStore);
+
 
 	//ZONA RESTRITA
     //router.use(loginCtrl.validateJWT);

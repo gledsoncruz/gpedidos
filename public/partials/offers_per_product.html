@@ -22,32 +22,45 @@
 					<p><span class="label label-primary">Economize {{offerDiff | currency: 'R$ -'}}</span></p>
 
 			</div>
-			<div class="row" style="padding-bottom: 20px;">
-				<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-					<input ng-model="filtro" class="form-control" type="text" placeholder="Loja..."/>
+			<div class="offers-per-product">
+				<div class="row" style="padding-bottom: 20px;">
+					<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+						<input ng-model="filtro" class="form-control" type="text" placeholder="Loja..."/>
+					</div>
 				</div>
+
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Loja</th>
+							<th>Email</th>
+							<th>Tel</th>
+							<th>Preço</th>
+							<th colspan="2" style="text-align: center;">Ação</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="offer in offersCtrl.product.offers  | filter: filtro | orderBy:'offer.price'">
+							<td>{{offer.store.name}}</td>
+							<td>{{offer.store.address}}</td>
+							<td>(24) 3346-6242</td>
+							<td>{{offer.price | currency: 'R$ '}}</td>
+							<td style="text-align: center;"><a class="btn btn-xs btn-primary" ng-href="#/offersPerStore/{{offer.store._id}}" role="button">Visualizar Loja</a></td>
+							<td style="text-align: center;"><a class="btn btn-xs btn-primary" href="#/offersPerStore" role="button">Reservar Produto</a></td>
+						</tr>
+					</tbody>
+				</table>
+
+
+				<uib-pagination total-items="totalItems"
+					        items-per-page= "itemsPerPage"
+					        ng-model="currentPage"
+					        class="pagination-sm"
+					        max-size="maxSize">
+				</uib-pagination>
+				<pre>Página {{currentPage}} / {{numPages}} em um total de {{totalItems}} ofertas</pre>
+
 			</div>
 
-			<table class="table table-bordered table-hover">
-				<thead>
-					<tr>
-						<th>Loja</th>
-						<th>Email</th>
-						<th>Tel</th>
-						<th>Preço</th>
-						<th colspan="2" style="text-align: center;">Ação</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="offer in offersCtrl.product.offers  | filter: filtro | orderBy:'offer.price'">
-						<td>{{offer.store.name}}</td>
-						<td>{{offer.store.address}}</td>
-						<td>(24) 3346-6242</td>
-						<td>{{offer.price | currency: 'R$ '}}</td>
-						<td style="text-align: center;"><a class="btn btn-xs btn-primary" href="#/offersPerStore" role="button">Visualizar Loja</a></td>
-						<td style="text-align: center;"><a class="btn btn-xs btn-primary" href="#/offersPerStore" role="button">Reservar Produto</a></td>
-					</tr>
-				</tbody>
-			</table>
 		</div>
 </div>

@@ -11,7 +11,7 @@ angular.module('appRoutes', ['ngRoute'])
     .when('/offersPerProduct/:id', {
       templateUrl: 'partials/offers_per_product.html'
     })
-    .when('/offersPerStore', {
+    .when('/offersPerStore/:id', {
       templateUrl: 'partials/offers_per_store.html'
     });
 

@@ -23,5 +23,9 @@ angular.module('offerService', [])
 		return $resource('/api/offersPerProduct/:id');
 	};
 
+	offerFactory.getOffersPerStore = function(){
+		return $resource('/api/offersPerStore/:id');
+	};
+
 	return offerFactory;
 })

@@ -44,10 +44,32 @@ angular.module('offerCtrl', ['offerService'])
 					maxValue = offer.price;
 				}
 			});
+			$scope.currentPage = 1;
+		    $scope.itemsPerPage = 10;
+		    $scope.maxSize = 10;
+		    $scope.totalItems = vm.product.offers.length;
+		    $scope.numPages = Math.ceil($scope.totalItems / $scope.itemsPerPage);
+
 			$scope.offerMinValue = minValue;
 			$scope.offerMaxValue = maxValue;
 			$scope.offerDiff = maxValue - minValue;
 			$scope.offerAverage = (maxValue + minValue)/2;
+		}, function(err){
+			console.error(err);
+		})
+
+	};
+
+	vm.getOffersPerStore = function(){
+
+		OfferFactory.getOffersPerStore().get({id: $routeParams.id}, function(store){
+			vm.store = store;
+			$scope.currentPage = 1;
+		    $scope.itemsPerPage = 10;
+		    $scope.maxSize = 10;
+		    $scope.totalItems = vm.store.offers.length;
+		    $scope.numPages = Math.ceil($scope.totalItems / $scope.itemsPerPage);
+
 		}, function(err){
 			console.error(err);
 		})

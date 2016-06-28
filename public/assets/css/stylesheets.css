@@ -1,10 +1,14 @@
+.price-label {
+    color: #428bca;
+}
+
 .price-range {
     font-size:20px;
     font-weight: bold;
 }
 
 .price-range .price-average {
-    color: blue;
+    color: #428bca;
 }
 
 .price-range .price-min {
@@ -12,7 +16,7 @@
 }
 
 .price-range .price-max {
-    color: #ff0000;
+    color: #d9534f;
 }
 
 .product-range{
