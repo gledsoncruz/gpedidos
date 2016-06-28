@@ -38,7 +38,10 @@ module.exports = function(app){
 			match: {
 				'available': true,
 				'store': {$ne: null}
-			}
+			},
+			options: {
+	          sort: 'price'
+	        }
 		}).exec(function(err, product){
 			if (err){
 				return res.status(401).json({message: 'Product not found'})
