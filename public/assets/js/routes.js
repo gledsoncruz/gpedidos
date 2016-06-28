@@ -12,7 +12,9 @@ angular.module('appRoutes', ['ngRoute'])
       templateUrl: 'partials/offers_per_product.html'
     })
     .when('/offersPerStore/:id', {
-      templateUrl: 'partials/offers_per_store.html'
+      templateUrl: 'partials/offers_per_store.html',
+      controller: 'OfferCtrl',
+      controllerAs: 'offersCtrl'
     });
 
     //$locationProvider.html5Mode(false);

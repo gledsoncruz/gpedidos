@@ -62,6 +62,23 @@ angular.module('offerCtrl', ['offerService'])
 
 	vm.getOffersPerStore = function(){
 
+		$scope.rate = 7;
+		$scope.max = 10;
+		$scope.isReadonly = true;
+
+		$scope.hoveringOver = function(value) {
+			$scope.overStar = value;
+			$scope.percent = 100 * (value / $scope.max);
+		};
+
+		// $scope.ratingStates = [
+		//     {stateOn: 'glyphicon-ok-sign', stateOff: 'glyphicon-ok-circle'},
+		//     {stateOn: 'glyphicon-star', stateOff: 'glyphicon-star-empty'},
+		//     {stateOn: 'glyphicon-heart', stateOff: 'glyphicon-ban-circle'},
+		//     {stateOn: 'glyphicon-heart'},
+		//     {stateOff: 'glyphicon-off'}
+		//   ];
+
 		OfferFactory.getOffersPerStore().get({id: $routeParams.id}, function(store){
 			vm.store = store;
 			$scope.currentPage = 1;
