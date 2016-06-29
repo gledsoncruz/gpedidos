@@ -85,6 +85,7 @@ module.exports = function(app){
 		var dados = {
 			"store" : sanitize(req.body.store),
 			"product" : sanitize(req.body.product),
+			"category" : sanitize(req.body.category),
 		    "price" : sanitize(req.body.price),
 		    "available" : sanitize(req.body.available)
 		};

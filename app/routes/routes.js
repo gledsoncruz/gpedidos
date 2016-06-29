@@ -7,13 +7,13 @@ module.exports = function(app){
 	var storeCtrl = app.controllers.storeCtrl;
 	var productCtrl = app.controllers.productCtrl;
 	var offerCtrl = app.controllers.offerCtrl;
+	var categoryCtrl = app.controllers.categoryCtrl;
 
 	var router = express.Router();
     app.use('/api', router);
 
 	router.route('/by')
 	   .get(function(req, res){
-	   	//console.log('response: '+ req);
 		res.json({"appname":"GPedidos-Sistema de Pedidos", "author":"Gledson Cruz", "email":"gledson.cruz@gmail.com"});
 	});
 
@@ -41,6 +41,18 @@ module.exports = function(app){
 
 	router.route('/offersPerStore/:id')
 		.get(storeCtrl.offersPerStore);
+
+	router.route('/categories')
+		.get(categoryCtrl.findAll)
+		.post(categoryCtrl.save);
+
+	router.route('/categoriesWithOffers')
+		.get(categoryCtrl.findCategoryWithOffers);
+
+	router.route('/categories/:id')
+		.get(categoryCtrl.findById)
+		.delete(categoryCtrl.delete)
+		.put(categoryCtrl.update);
 
 
 	//ZONA RESTRITA

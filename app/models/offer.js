@@ -15,6 +15,10 @@ module.exports = function(){
 			type: Schema.Types.ObjectId,
 			ref: 'Product'
 		},
+		category: {
+			type: Schema.Types.ObjectId,
+			ref: 'Category'
+		},
 		price: {
 			type: Number,
 			required: true
@@ -39,6 +43,8 @@ module.exports = function(){
 
 		var storeModel = mongoose.model('Store');
 		var productModel = mongoose.model('Product');
+		var categoryModel = mongoose.model('Category');
+		categoryModel.update({_id: this.category },{ $push: { offers: this } }, function(category){});
 		storeModel.update({_id: this.store },{ $push: { offers: this } }, function(store){});
 		productModel.update({_id: this.product },{ $push: { offers: this } }, function(product){});
 
@@ -47,6 +53,8 @@ module.exports = function(){
 	OfferSchema.post('remove', function(){
 		var storeModel = mongoose.model('Store');
 		var productModel = mongoose.model('Product');
+		var categoryModel = mongoose.model('Category');
+		categoryModel.update({_id: this.category },{ $pull: { offers: this.id } }, function(category){});
 		storeModel.update({_id: this.store },{ $pull: { offers: this.id } }, function(store){});
 		productModel.update({_id: this.product },{ $pull: { offers: this.id } }, function(product){});
 

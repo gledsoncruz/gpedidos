@@ -8,6 +8,8 @@ angular.module('gpedidos', [
 	'productService',
 	'productCtrl',
 	'offerService',
-	'offerCtrl'
+	'offerCtrl',
+	'categoryService',
+	'categoryCtrl'
 
 	]);

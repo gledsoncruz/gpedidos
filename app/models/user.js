@@ -21,6 +21,10 @@ module.exports = function(){
 				unique: true
 			}
 		},
+		phone: {
+			type: String,
+			required: true
+		},
 		password: {
 			type: String,
 			required: true,

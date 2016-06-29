@@ -14,20 +14,17 @@ angular.module('offerCtrl', ['offerService'])
 	//$scope.offersPerProduct = [];
 
 	vm.getOffers = function(){
-		OfferFactory.getAllOffers()
-			.then(function(data){
-				vm.offers = data;
-				$scope.currentPage = 1;
-			    $scope.itemsPerPage = 24;
-			    $scope.maxSize = 10;
-			    $scope.totalItems = vm.offers.length;
-			    $scope.numPages = Math.ceil($scope.totalItems / $scope.itemsPerPage);
 
-			}, function(error){
-
-				console.log('ERROR');
-
-			});
+		OfferFactory.getAllOffers().query(function(offers){
+			vm.offers = offers;
+			$scope.currentPage = 1;
+		    $scope.itemsPerPage = 24;
+		    $scope.maxSize = 10;
+		    $scope.totalItems = vm.offers.length;
+		    $scope.numPages = Math.ceil($scope.totalItems / $scope.itemsPerPage);
+		}, function(err){
+			console.error(err);
+		});
 	};
 
 	vm.getOffersPerProduct = function(){

@@ -1,27 +1,26 @@
 
 
-<div id="categories-list" class="row list-group" ng-controller="OfferCtrl as offer" ng-init="offer.getOffers()">
+<div id="categories-list" class="row list-group">
 
 	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Categorias</h3>
-		</div>
-		<div class="panel-body">
-			Panel content
+		<div class="panel panel-default" ng-controller="CategoryCtrl as category" ng-init="category.getCategories()">
+			<div class="panel-heading">
+				<h3 class="panel-title">Por Categorias</h3>
+			</div>
+			<ul class="list-group" ng-repeat="category in category.categories">
+			    <li class="list-group-item">{{category.name}}<span class="badge">{{category.offers.length}}</span></li>
+			</ul>
 		</div>
 	</div>
 
-	</div>
-
-	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10" ng-controller="OfferCtrl as offer" ng-init="offer.getOffers()">
 
 		<div class="row">
 
 			<div class="input-group container">
-				<div class="input-group-addon">Buscar</div>
 				<input ng-model="filtro" class="form-control input-lg" type="text" placeholder="Produto...">
-		    </div>
+				<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span> </span>
+			</div>
 		    <br/>
 
 			<div ng-repeat="offer in offer.offers | filter: filtro | offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">

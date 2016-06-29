@@ -7,16 +7,7 @@ angular.module('offerService', [])
 	var deferred = $q.defer();
 
 	offerFactory.getAllOffers = function(){
-		return $http.get('/api/productsInOffers')
-		.then(function(response){
-			deferred.resolve(response.data);
-			return deferred.promise;
-		},function(response){
-			deferred.reject(response);
-			//console.log(deferred.promise);
-			return deferred.promise;
-		});
-
+		return $resource('/api/productsInOffers');
 	};
 
 	offerFactory.getOffersPerProduct = function(){
