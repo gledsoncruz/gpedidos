@@ -13,6 +13,11 @@ body > .container {
   padding: 60px 15px 0;
 }
 
+.ng-cloak {
+  /* Isso vai mudar para bloquear quando scope e angular estiverem prontos*/
+  display: none;
+}
+
 .panel > .panel-heading {
     background-color: #696969;
     color: white;
