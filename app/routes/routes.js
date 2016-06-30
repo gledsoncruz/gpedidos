@@ -21,18 +21,35 @@ module.exports = function(app){
 		res.json({"appname":"GPedidos-Sistema de Pedidos", "author":"Gledson Cruz", "email":"gledson.cruz@gmail.com"});
 	});
 
-    router.route('/signup').post(userCtrl.save);
+    router.route('/signup')
+    	.post(userCtrl.save);
+
     router.route('/login')
 		.post(loginCtrl.authenticate);
 
+	router.route('/stores')
+		.get(storeCtrl.findAll);
 
+	router.route('/stores/:id')
+		.get(storeCtrl.findById);
 
 	router.route('/products')
 		.get(productCtrl.findAll);
 
+	router.route('/products/:id')
+		.get(productCtrl.findById);
+
+	router.route('/categories')
+		.get(categoryCtrl.findAll);
+
+	router.route('/categories/:id')
+		.get(categoryCtrl.findById);
+
 	router.route('/offers')
-		.get(offerCtrl.findAll)
-		.post(offerCtrl.save);
+		.get(offerCtrl.findAll);
+
+	router.route('/offers/:id')
+		.get(offerCtrl.findById);
 
 	router.route('/offersActives')
 		.get(offerCtrl.findOffersActives);
@@ -46,67 +63,63 @@ module.exports = function(app){
 	router.route('/offersPerStore/:id')
 		.get(storeCtrl.offersPerStore);
 
-	router.route('/categories')
-		.get(categoryCtrl.findAll)
-		.post(categoryCtrl.save);
-
 	router.route('/categoriesWithOffers')
 		.get(categoryCtrl.findCategoryWithOffers);
 
-	router.route('/categories/:id')
-		.get(categoryCtrl.findById)
-		.delete(categoryCtrl.delete)
-		.put(categoryCtrl.update);
-
-
 	//ZONA RESTRITA
-    //router.use(loginCtrl.validateJWT);
+    router.use(loginCtrl.validateJWT);
+
+    //USERS
+
     router.route('/me')
 		.get(function(req, res){
 			res.json(req.decoded);
 		});
 
+	router.route('/users')
+		.get(loginCtrl.authorize, userCtrl.findAll);
+
    	router.route('/users/:id')
-		.get(/*loginCtrl.authorize, */userCtrl.findById)
-		.delete(/*loginCtrl.authorize, */userCtrl.delete)
-		.put(/*loginCtrl.authorize, */userCtrl.update);
-
-	router.route('/users')
-		.get(userCtrl.findAll);
-
-	router.route('/users')
-		.get(userCtrl.findAll);
+		.get(loginCtrl.authorize, userCtrl.findById)
+		.delete(loginCtrl.authorize, userCtrl.delete)
+		.put(loginCtrl.authorize, userCtrl.update);
 
 	//STORES
 
 	router.route('/stores')
-		.get(storeCtrl.findAll)
-		.post(storeCtrl.save);
+		.post(loginCtrl.authorize, storeCtrl.save);
 
 	router.route('/stores/:id')
-		.get(/*loginCtrl.authorize, */storeCtrl.findById)
-		.delete(/*loginCtrl.authorize, */storeCtrl.delete)
-		.put(/*loginCtrl.authorize, */storeCtrl.update);
+		.delete(loginCtrl.authorize, storeCtrl.delete)
+		.put(loginCtrl.authorize, storeCtrl.update);
 
 	//PRODUCTS
 
 	router.route('/products')
-		.post(productCtrl.save);
+		.post(loginCtrl.authorize, productCtrl.save);
 
 	router.route('/products/:id')
-		.get(/*loginCtrl.authorize, */productCtrl.findById)
-		.delete(/*loginCtrl.authorize, */productCtrl.delete)
-		.put(/*loginCtrl.authorize, */productCtrl.update);
+		.delete(loginCtrl.authorize, productCtrl.delete)
+		.put(loginCtrl.authorize, productCtrl.update);
+
+	//CATEGORIES
+
+	router.route('/categories')
+		.post(loginCtrl.authorize, categoryCtrl.save);
+
+	router.route('/categories/:id')
+		.delete(loginCtrl.authorize, categoryCtrl.delete)
+		.put(loginCtrl.authorize, categoryCtrl.update);
 
 	//OFFERS
 
-	//router.route('/offers')
-	//	.post(offerCtrl.save);
+	router.route('/offers')
+		.post(loginCtrl.authorize, offerCtrl.save);
 
 	router.route('/offers/:id')
-		.get(/*loginCtrl.authorize, */offerCtrl.findById)
-		.delete(/*loginCtrl.authorize, */offerCtrl.delete)
-		.put(/*loginCtrl.authorize, */offerCtrl.update);
+		.delete(loginCtrl.authorize, offerCtrl.delete)
+		.put(loginCtrl.authorize, offerCtrl.update);
+
 
 	app.use(function(req,res){
 	    res.status(404).send({message: 'Erro 404: Rota não encontrada'});

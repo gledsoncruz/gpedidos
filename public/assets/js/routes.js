@@ -18,9 +18,21 @@ angular.module('appRoutes', ['ngRoute'])
     })
     .when('/login', {
       templateUrl: 'partials/login.html'
-    });
+    })
+    .when('/me', {
+      templateUrl: 'partials/me.html'
+    })
+    .when('/404', {
+      templateUrl: 'partials/404.html'
+    })
+    .otherwise({
+        redirectTo: '/404'
+      });;
 
-    //$locationProvider.html5Mode(false);
+    // $locationProvider.html5Mode({
+    //   enabled: true,
+    //   requireBase: false
+    // });
 
 
 })

@@ -1,25 +1,27 @@
-<div class="row" style="padding-top: 150px;">
+<div class="row" style="padding-top: 150px;" ng-controller="AuthCtrl as login">
   <div class="col-md-offset-4 col-md-4">
     <div class="panel panel-default">
     	<div class="panel-heading">
     		<h3 class="panel-title">Login</h3>
     	</div>
     	<div class="panel-body">
-    		<form action="" method="POST" role="form">
-
-    			<div class="form-group">
-    				<label for="">Usuário</label>
+    		<form role="form" ng-submit="login.doLogin()" name="loginForm" novalidate>
+    			<uib-alert ng-repeat="alert in loginForm.alerts" type="danger" close="loginForm.closeAlert($index)">{{alert.msg}}</uib-alert>
+    			<div class="form-group" ng-class="{ 'has-error': loginForm.email.$invalid && loginForm.submitted}">
+    				<label for="">Email</label>
     				<div class="input-group">
     					<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span> </span>
-    					<input type="text" class="form-control" id="" placeholder="Usuário">
+    					<input type="email" class="form-control" id="email" name="email" placeholder="Email" ng-model="login.loginData.email" required>
     				</div>
+    				<p class="help-block" ng-show="loginForm.email.$invalid && loginForm.submitted">Email inválido</p>
     			</div>
-    			<div class="form-group">
+    			<div class="form-group" ng-class="{ 'has-error': loginForm.password.$invalid && loginForm.submitted }">
     				<label for="">Senha</label>
     				<div class="input-group">
     					<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span> </span>
-    					<input type="password" class="form-control" id="" placeholder="Senha">
+    					<input type="password" class="form-control" id="password" name="password" placeholder="Senha" ng-model="login.loginData.password" required>
     				</div>
+    				<p class="help-block" ng-show="loginForm.password.$invalid && loginForm.submitted">Campo Requerido</p>
     			</div>
 
 

@@ -40,6 +40,7 @@ module.exports = function(app){
 		var dados = {
 		    "name" : sanitize(req.body.name),
 		    "email" : sanitize(req.body.email),
+		    "phone" : sanitize(req.body.phone),
 		    "password" : sanitize(req.body.password),
 		    "role" : sanitize(req.body.role)
 		};
