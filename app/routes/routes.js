@@ -2,6 +2,7 @@ var express = require('express');
 
 module.exports = function(app){
 
+	var appInfoCtrl = app.controllers.appInfoCtrl;
 	var loginCtrl = app.controllers.loginCtrl;
 	var userCtrl = app.controllers.userCtrl;
 	var storeCtrl = app.controllers.storeCtrl;
@@ -11,6 +12,9 @@ module.exports = function(app){
 
 	var router = express.Router();
     app.use('/api', router);
+
+    router.route('/app-info')
+    	.get(appInfoCtrl.appInfos);
 
 	router.route('/by')
 	   .get(function(req, res){

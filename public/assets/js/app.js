@@ -10,6 +10,8 @@ angular.module('gpedidos', [
 	'offerService',
 	'offerCtrl',
 	'categoryService',
-	'categoryCtrl'
+	'categoryCtrl',
+	'indexService',
+	'indexCtrl'
 
 	]);

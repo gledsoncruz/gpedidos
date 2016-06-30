@@ -2,7 +2,7 @@
 
 angular.module('userService', [])
 
-.factory('UserFactory', function($http, $q){
+.factory('UserFactory', function($http, $q, $resource){
 	var userFactory = {};
 	var deferred = $q.defer();
 
@@ -11,17 +11,19 @@ angular.module('userService', [])
 	};
 
 	userFactory.getAllUsers = function(){
-		return $http.get('/api/users')
-		.then(function(response){
-			deferred.resolve(response.data);
-			return deferred.promise;
-		},function(response){
-			deferred.reject(response);
-			//console.log(deferred.promise);
-			return deferred.promise;
-		});
-
+		return $resource('/api/users');
 	};
 
+	userFactory.login = function(email, password){
+		return $resource('/efood/api/login', {
+			email: email,
+			password: password
+		});
+
+
+	}
+
+
 	return userFactory;
+
 })

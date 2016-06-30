@@ -15,6 +15,9 @@ angular.module('appRoutes', ['ngRoute'])
       templateUrl: 'partials/offers_per_store.html',
       controller: 'OfferCtrl',
       controllerAs: 'offersCtrl'
+    })
+    .when('/login', {
+      templateUrl: 'partials/login.html'
     });
 
     //$locationProvider.html5Mode(false);

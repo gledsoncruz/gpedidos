@@ -1,3 +1,30 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    padding-top: 80px;
+    font-size: 14px;
+    margin-bottom: 60px;
+}
+
+body > .container {
+  padding: 60px 15px 0;
+}
+
+.panel > .panel-heading {
+    background-color: #696969;
+    color: white;
+
+}
+
+.panel{
+
+    border-color: #696969;
+
+}
+
 .price-label {
     color: #428bca;
 }
