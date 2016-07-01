@@ -21,8 +21,8 @@
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body class="ng-cloak">
-		<nav class="navbar navbar-custom navbar-fixed-top" role="navigation" ng-controller="IndexCtrl as index" ng-init="index.getAppInfo()">
+	<body class="ng-cloak" ng-controller="AuthCtrl as auth">
+		<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -32,7 +32,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">{{index.appInfo.appName}}</a>
+					<a class="navbar-brand" href="#">Bebida Fácil</a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -42,7 +42,10 @@
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
-						<li><a ng-href="#/login">Login</a></li>
+						<li ng-if="!auth.loggedIn"><a href="#/login">Login</a></li>
+						<li ng-if="auth.loggedIn"><a href="#/me">{{auth.user.name}}</a></li>
+						<li ng-if="auth.loggedIn"><a href="#/" ng-click="auth.doLogout()">Logout</a></li>
+						<!--li><a ng-href="#/login">Login</a></li-->
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div>
@@ -52,8 +55,8 @@
 		</div>
 
 		<footer class="footer">
-		    <div class="container" ng-controller="IndexCtrl as index" ng-init="index.getAppInfo()">
-		    	<p class="text-muted">{{index.appInfo.appName}} <span class="pull-right">{{date | date: 'yyyy'}}</span> </p>
+		    <div class="container">
+		    	<p class="text-muted">Bebida Fácil <span class="pull-right">2016</span> </p>
 		    </div>
 		</footer>
 

@@ -74,6 +74,7 @@ module.exports = function(app){
     router.route('/me')
 		.get(function(req, res){
 			res.json(req.decoded);
+			console.error(req.decoded);
 		});
 
 	router.route('/users')

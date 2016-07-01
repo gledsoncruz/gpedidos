@@ -2,37 +2,37 @@
 
 angular.module('authCtrl', [])
 
-.controller('AuthCtrl', function($window, $scope, $route, $rootScope, $location, Auth){
+.controller('AuthCtrl', function($window, $scope, $rootScope, $location, Auth){
 
     var vm = this;
 
-    vm.loggedIn = Auth.isLoggedIn();
 
-    $rootScope.$on('$routeChangeStart', function(event, next, current){
-
+    $rootScope.$on('$routeChangeStart', function(event, current){
         vm.loggedIn = Auth.isLoggedIn();
+        //console.error('PAGINA PROTEGIDA ----> ' +current.$$route.isLogged);
+        //console.error('USUARIO LOGADO ----> ' +vm.loggedIn);
 
-        if (vm.loggedIn){
+        //$templateCache.removeAll();
 
-            Auth.getUser()
-                .then(function(data){
-                vm.user = data.data;
-            },
-            function(error){
-                Auth.logout();
-                vm.user = '';
-                $location.path('#/login');
-                $window.location.reload();
-                console.log('ERROR');
-            });
+        if (current.$$route.isLogged) {
+            if (vm.loggedIn){
+                Auth.getUser()
+                    .then(function(data){
+                    vm.user = data.data;
+                },
+                function(error){
+                    Auth.logout();
+                    vm.user = '';
+                    event.preventDefault();
+                    $location.path('/login');
+                });
+            } else {
+                event.preventDefault();
+                $location.path('/login');
+            }
+        }
 
-         } //else {
-        //     if (next.templateUrl === "partials/signup.html"){
-        //         $location.path('/signup');
-        //     } else {
-        //         $location.path('/login');
-        //     }
-        // }
+
     });
 
     vm.doLogin = function(){
@@ -69,7 +69,7 @@ angular.module('authCtrl', [])
 
     vm.doLogout = function(){
         Auth.logout();
-        $window.location.reload();
+        //$window.location.reload();
     }
 
 });
