@@ -23,6 +23,10 @@ angular.module('appRoutes', ['ngRoute'])
       templateUrl: 'partials/login.html',
       isLogged: false
     })
+    .when('/register', {
+      templateUrl: 'partials/registroUsuario.html',
+      isLogged: false
+    })
     .when('/me', {
       templateUrl: 'partials/me.html',
       isLogged: true
