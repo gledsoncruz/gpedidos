@@ -18,7 +18,7 @@ module.exports = function(app){
 		var id = sanitize(req.params.id);
 		User.findOne({'_id' :id}, function(err, user){
 			if (err){
-				return res.status(401).json({message: 'User not found'})
+				return res.status(401).json({message: 'Usuário não encontrado.'})
 			}
 			return res.json(user);
 		});
@@ -30,9 +30,9 @@ module.exports = function(app){
 		User.update({"_id" :id}, req.body,
 			function(err){
 				if (err){
-					return res.json({ success: false, message: 'Error updated.'});
+					return res.json({ success: false, message: 'Erro ao alterar usuário.'});
 				}
-				return res.status(202).json({success: true, message: 'User has been updated'})
+				return res.status(202).json({success: true, message: 'Usuário alterado com sucesso.'})
 			});
 	}
 
@@ -50,15 +50,15 @@ module.exports = function(app){
 
 			if (err){
 				if (err.code == 11000)
-					return res.send({ success: false, message: 'Email is already taken.'});
+					return res.send({ success: false, message: 'Email já existente em nossa base de dados.'});
 				else
-					return res.send({ success:false, message: 'Error'});
+					return res.send({ success:false, message: 'Erro ao salvar usuário.'});
 			}
 			//var token = loginCtrl.createToken(user);
 
 			return res.json({
 				success: true,
-				message: 'User created !'
+				message: 'Usuário criado com sucesso.'
 				//token: token
 			})
 		});
@@ -68,9 +68,9 @@ module.exports = function(app){
 		var id = sanitize(req.params.id);
 		User.remove({'_id' :id}, function(err, user){
 			if (err){
-				res.status(401).json({message: 'Error delete user'})
+				res.status(401).json({message: 'Erro ao deletar usuário.'})
 			}
-			res.json({message: 'User has been deleted'})
+			res.json({message: 'Usuário deletado com sucesso.'})
 		})
 	}
 

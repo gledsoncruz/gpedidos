@@ -34,7 +34,7 @@ module.exports = function(app){
 		var id = sanitize(req.params.id);
 		Category.findOne({'_id' :id}).populate('products').exec(function(err, category){
 			if (err){
-				return res.status(401).json({message: 'Category not found'})
+				return res.status(401).json({message: 'Categoria não encontrada.'})
 			}
 			return res.json(category);
 		});
@@ -46,9 +46,9 @@ module.exports = function(app){
 		Category.update({"_id" :id}, req.body,
 			function(err){
 				if (err){
-					return res.json({ success: false, message: 'Error updated.'});
+					return res.json({ success: false, message: 'Erro ao alterar categoria.'});
 				}
-				return res.status(202).json({success: true, message: 'Category has been updated'})
+				return res.status(202).json({success: true, message: 'Categoria alterada com sucesso.'})
 			});
 	}
 
@@ -61,12 +61,12 @@ module.exports = function(app){
 
 
 			if (err){
-				return res.send({ success:false, message: 'Error'});
+				return res.send({ success:false, message: 'Erro ao criar categoria.'});
 			}
 
 			return res.json({
 				success: true,
-				message: 'Category created !'
+				message: 'Categoria criada com sucesso.'
 				//token: token
 			})
 		});
@@ -76,9 +76,9 @@ module.exports = function(app){
 		var id = sanitize(req.params.id);
 		Category.remove({'_id' :id}, function(err, category){
 			if (err){
-				res.status(401).json({message: 'Error delete category'})
+				res.status(401).json({message: 'Erro ao deletar categoria.'})
 			}
-			res.json({message: 'Category has been deleted'})
+			res.json({message: 'Categoria deletada com sucesso.'})
 		})
 	}
 

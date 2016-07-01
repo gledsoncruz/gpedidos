@@ -54,7 +54,7 @@ module.exports = function(app){
 		var id = sanitize(req.params.id);
 		Product.findOne({'_id' :id}).populate('offers').exec(function(err, product){
 			if (err){
-				return res.status(401).json({message: 'Product not found'})
+				return res.status(401).json({message: 'Produto não encontrado.'})
 			}
 			return res.json(product);
 		});
@@ -66,9 +66,9 @@ module.exports = function(app){
 		Product.update({"_id" :id}, req.body,
 			function(err){
 				if (err){
-					return res.json({ success: false, message: 'Error updated.'});
+					return res.json({ success: false, message: 'Erro ao alterar produto.'});
 				}
-				return res.status(202).json({success: true, message: 'Product has been updated'})
+				return res.status(202).json({success: true, message: 'Produto alterado com sucesso.'})
 			});
 	}
 
@@ -82,13 +82,12 @@ module.exports = function(app){
 
 
 			if (err){
-				return res.send({ success:false, message: 'Error'});
+				return res.send({ success:false, message: 'Erro ao criar produto.'});
 			}
 
 			return res.json({
 				success: true,
-				message: 'Product created !'
-				//token: token
+				message: 'Produto criado com sucesso.'
 			})
 		});
 	}
@@ -97,9 +96,9 @@ module.exports = function(app){
 		var id = sanitize(req.params.id);
 		Product.remove({'_id' :id}, function(err, product){
 			if (err){
-				res.status(401).json({message: 'Error delete product'})
+				res.status(401).json({message: 'Erro ao deletar produto.'})
 			}
-			res.json({message: 'Product has been deleted'})
+			res.json({message: 'Produto deletado com sucesso.'})
 		})
 	}
 

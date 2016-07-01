@@ -31,7 +31,7 @@ module.exports = function(app){
 				next();
 			} else {
 				console.log(err);
-				res.status(403).send({success: false, message: 'Unauthorized'});
+				res.status(403).send({success: false, message: 'Não autorizado.'});
 			}
 
 		});
@@ -51,24 +51,24 @@ module.exports = function(app){
 			if (err) throw err;
 
 			if(!user){
-				res.send({message: 'User doenst exist'});
+				res.send({message: 'Usuário não existe.'});
 			} else if (!user.block){
 				//console.log(user);
 				var validPassword = user.comparePassword(req.body.password);
 
 				if (!validPassword){
-					res.send({message: 'User or password doenst exists'})
+					res.send({message: 'Usuário ou senha inválido.'})
 				} else {
 					var token = createToken(user);
 
 					res.json({
 						success: true,
-						message: 'Successfuly login !',
+						message: 'Login efetuado com sucesso.',
 						token: token
 					})
 				}
 			} else {
-				res.send({ message: 'User blocked'})
+				res.send({ message: 'Usuário bloqueado, entre em contato com o administrador.'})
 			}
 		});
 	}
@@ -82,7 +82,7 @@ module.exports = function(app){
 			jsonwebtoken.verify(token, gpedidosToken, function(err, decoded){
 				//console.log('Token: ' +token);
 				if (err){
-					res.status(403).send({success: false, message: 'Failed authenticate user'});
+					res.status(403).send({success: false, message: 'Falha na autenticação.'});
 				} else {
 					req.decoded = decoded;
 					//console.log(req.decoded);
@@ -91,7 +91,7 @@ module.exports = function(app){
 			});
 		} else {
 
-			res.status(403).send({success: false, message: 'No token provided'});
+			res.status(403).send({success: false, message: 'Token inválido.'});
 		}
 
 	}

@@ -41,7 +41,7 @@ module.exports = function(app){
 			select: '_id name email'
 		}]).exec(function(err, store){
 			if (err){
-				return res.status(401).json({message: 'Store not found'})
+				return res.status(401).json({message: 'Loja não encontrada.'})
 			} else {
 					store.offers.forEach(function (offer, index) {
 					    if (!offer.available){
@@ -60,7 +60,7 @@ module.exports = function(app){
 		var id = sanitize(req.params.id);
 		Store.findOne({'_id' :id}).populate('offers').exec(function(err, store){
 			if (err){
-				return res.status(401).json({message: 'Store not found'})
+				return res.status(401).json({message: 'Loja não encontrada.'})
 			}
 			return res.json(store);
 		});
@@ -72,9 +72,9 @@ module.exports = function(app){
 		Store.update({"_id" :id}, req.body,
 			function(err){
 				if (err){
-					return res.json({ success: false, message: 'Error updated.'});
+					return res.json({ success: false, message: 'Erro ao alterar loja.'});
 				}
-				return res.status(202).json({success: true, message: 'Store has been updated'})
+				return res.status(202).json({success: true, message: 'Loja alterada com sucesso.'})
 			});
 	}
 
@@ -95,18 +95,18 @@ module.exports = function(app){
 
 
 			if (err){
-				return res.send({ success:false, message: 'Error'});
+				return res.send({ success:false, message: 'Erro ao criar loja.'});
 			} else {
 
 				User.update({_id: sanitize(req.body.owner) },{ $push: { stores: store } }, function(err, user){
 					if (err){
-						return res.send({ success:false, message: 'Error'});
+						return res.send({ success:false, message: 'Erro ao associar loja ao usuário.'});
 					}
 				});
 
 				return res.json({
 					success: true,
-					message: 'Store created !'
+					message: 'Loja criada com sucesso.'
 				})
 
 			}
@@ -121,16 +121,16 @@ module.exports = function(app){
 
 		Store.remove({'_id' :id}, function(err, store){
 			if (err){
-				res.status(401).json({message: 'Error delete store'})
+				res.status(401).json({message: 'Erro ao deletar loja.'})
 			} else {
 
 				User.update({_id: owner },{ $pull: { stores: id } }, function(err, user){
 				if (err){
-					return res.send({ success:false, message: 'Error'});
+					return res.send({ success:false, message: 'Erro ao desvincular loja do usuário.'});
 					}
 				});
 
-				res.json({message: 'Store has been deleted'})
+				res.json({message: 'Loja deletada com sucesso.'})
 
 			}
 

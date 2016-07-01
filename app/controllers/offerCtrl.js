@@ -44,7 +44,7 @@ module.exports = function(app){
 	        }
 		}).exec(function(err, product){
 			if (err){
-				return res.status(401).json({message: 'Product not found'})
+				return res.status(401).json({message: 'Produto não encontrado.'})
 			} else {
 					product.offers.forEach(function (offer, index) {
 					    if ((!offer.available) || (!offer.store.active)){
@@ -63,7 +63,7 @@ module.exports = function(app){
 		var id = sanitize(req.params.id);
 		Offer.findOne({'_id' :id}, function(err, offer){
 			if (err){
-				return res.status(401).json({message: 'Offer not found'})
+				return res.status(401).json({message: 'Oferta não encontrada.'})
 			}
 			return res.json(offer);
 		});
@@ -75,9 +75,9 @@ module.exports = function(app){
 		Offer.findOneAndUpdate({"_id" :id}, req.body,
 			function(err, offer){
 				if (err){
-					return res.json({ success: false, message: 'Error updated.'});
+					return res.json({ success: false, message: 'Erro ao alterar oferta.'});
 				}
-				return res.status(202).json({success: true, message: 'Offer has been updated'})
+				return res.status(202).json({success: true, message: 'Oferta alterada com sucesso.'})
 			});
 	}
 
@@ -94,14 +94,14 @@ module.exports = function(app){
 
 			if (err){
 				if (err.code == 11000){
-					return res.send({ success:false, message: "Offers already exist in your store"});
+					return res.send({ success:false, message: "Essa oferta já existe em sua loja."});
 				}
 				return res.send({ success:false, message: err});
 			} else {
 
 				return res.json({
 					success: true,
-					message: 'Offer created !'
+					message: 'Oferta criada com sucesso.'
 				})
 			}
 
@@ -113,16 +113,16 @@ module.exports = function(app){
 
 		Offer.findOne({'_id' :id}, function(err, offer){
 			if (err){
-				res.status(401).json({message: 'Offer not found'})
+				res.status(401).json({message: 'Oferta não encontrada.'})
 			} else {
 				offer.remove(function(err){
 					if (err){
-						res.status(401).json({message: 'Error delete offer'})
+						res.status(401).json({message: 'Erro ao deletar oferta.'})
 					}
 
 					return res.json({
 						success: true,
-						message: 'Offer deleted !'
+						message: 'Oferta deletada com sucesso.'
 					})
 
 				});
