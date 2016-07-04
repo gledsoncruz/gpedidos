@@ -24,7 +24,7 @@ angular.module('appRoutes', ['ngRoute'])
       isLogged: false
     })
     .when('/register', {
-      templateUrl: 'partials/registroUsuario.html',
+      templateUrl: 'partials/signup.html',
       isLogged: false
     })
     .when('/me', {

@@ -1,0 +1,63 @@
+<div class="container" ng-controller="UserCtrl as user">
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Registrar Usuário</h3>
+		</div>
+		<div class="panel-body">
+
+			<form role="form" novalidate ng-submit="user.create()" name="formSignup">
+			<uib-alert ng-repeat="alert in formSignup.alerts" type="danger" close="formSignup.closeAlert($index)">{{alert.msg}}</uib-alert>
+				<legend>Preencha todos os campos abaixo.</legend>
+
+				<div class="form-group" ng-class="{ 'has-error': formSignup.name.$invalid && formSignup.submitted}">
+					<label for="">Nome</label>
+					<input type="text" class="form-control" id="name" name="name" placeholder="Nome" ng-model="user.userData.name" required>
+					<div ng-messages="formSignup.name.$error" ng-if="formSignup.submitted" class="help-block">
+					  <div ng-message="required">Campo Requerido</div>
+					</div>
+				</div>
+
+
+				<div class="form-group" ng-class="{ 'has-error': formSignup.email.$invalid && formSignup.submitted}">
+					<label for="">Email</label>
+					<input type="email" class="form-control" id="email" name="email" placeholder="Email" ng-model="user.userData.email" required>
+					<div ng-messages="formSignup.email.$error" ng-if="formSignup.submitted" class="help-block">
+					  <div ng-message="required">Campo Requerido</div>
+					  <div ng-message="email">Email inválido</div>
+					</div>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error': formSignup.phone.$invalid && formSignup.submitted}">
+					<label for="">Celular</label>
+					<input type="text" class="form-control" id="phone" name="phone" placeholder="Celular" ng-model="user.userData.phone" required ui-br-phone-number>
+					<div ng-messages="formSignup.phone.$error" ng-if="formSignup.submitted" class="help-block">
+					  <div ng-message="required">Campo Requerido</div>
+					</div>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error': formSignup.password.$invalid && formSignup.submitted}">
+					<label for="">Senha</label>
+					<input type="password" class="form-control" id="password" name="password" placeholder="Senha" ng-model="user.userData.password" required>
+					<div ng-messages="formSignup.password.$error" ng-if="formSignup.submitted" class="help-block">
+					  <div ng-message="required">Campo Requerido</div>
+					</div>
+				</div>
+
+				<div class="form-group" ng-class="{ 'has-error': formSignup.passwordconfirm.$invalid && formSignup.submitted}">
+					<label for="">Repetir Senha</label>
+					<input type="password" class="form-control" id="passwordconfirm" name="passwordconfirm" placeholder="Repetir Senha" ng-model="user.userData.pesswordconfirm" required match-password="password">
+					<div ng-messages="formSignup.passwordconfirm.$error" ng-if="formSignup.submitted" class="help-block">
+					  <div ng-message="required">Campo Requerido</div>
+					  <div ng-message="passwordMatch">Senha não confere</div>
+					</div>
+				</div>
+
+
+
+				<button type="submit" class="btn btn-primary">Registrar</button>
+			</form>
+		</div>
+	</div>
+
+</div>

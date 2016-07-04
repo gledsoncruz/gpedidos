@@ -14,11 +14,16 @@ var app = angular.module('gpedidos', [
 	'indexService',
 	'indexCtrl',
 	'authService',
-	'authCtrl'
+	'authCtrl',
+	'userService',
+	'userCtrl',
+	'ngMessages',
+	'ui.utils.masks',
+	'ngPassword'
 	]
 );
 
 app.config(function($httpProvider){
 	$httpProvider.interceptors.push('AuthInterceptor');
 
-})
+});

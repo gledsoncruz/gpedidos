@@ -33,7 +33,8 @@ module.exports = function(){
 		role: {
 			type: String, //admin, gerente, funcionario, appuser
 			required: true,
-			select: false
+			select: false,
+			default: 'user'
 		},
 		block: {
 			type: Boolean,

@@ -69,7 +69,7 @@ angular.module('authCtrl', [])
 
     vm.doLogout = function(){
         Auth.logout();
-        //$window.location.reload();
+        $window.location.reload();
     }
 
 });
